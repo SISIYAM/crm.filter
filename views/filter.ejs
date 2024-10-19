@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filter Transactions</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1>Filter Transactions</h1>
+      <form method="GET" action="/filter">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="start_date">Start Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="start_date"
+              name="start_date"
+              required
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="end_date">End Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="end_date"
+              name="end_date"
+              required
+            />
+          </div>
+          <input
+            type="hidden"
+            name="product_code"
+            value="<%= product_code %>"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </form>
+
+      <div class="row mt-4">
+        <% if (transactions && transactions.length > 0) { %> <%
+        transactions.forEach(transaction => { %>
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title"><%= transaction.ProductName %></h5>
+              <p class="card-text">Name: <%= transaction.Name %></p>
+              <p class="card-text">Email: <%= transaction.Email %></p>
+              <p class="card-text">Phone: <%= transaction.Phone %></p>
+              <p class="card-text">
+                Institution: <%= transaction.Institution %>
+              </p>
+              <p class="card-text">
+                Amount: <%= transaction.currency_amount %> BDT
+              </p>
+              <p class="card-text">
+                Transaction ID: <%= transaction.tran_id %>
+              </p>
+              <p class="card-text">Date: <%= transaction.tran_date %></p>
+            </div>
+          </div>
+        </div>
+        <% }) %> <% } else { %>
+        <div class="col-12">
+          <div class="alert alert-warning" role="alert">
+            No transactions found for the selected criteria.
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>
